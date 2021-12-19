@@ -89,7 +89,11 @@ def calc_distance(test_sample, x_train):
     for train_sample in x_train:
         _distance = 0
         for i in range(len(test_sample)):
-            _distance += (test_sample[i]-train_sample[i])**2
+            if test_sample[i].is_numeric(): # to calculate distance between numeric columns
+                _distance += (test_sample[i]-train_sample[i])**2
+            else :
+                # Calculating hamming distance and adding their square to the euclidean distance
+                comparison_score = sum([1 if test_sample[i][idx] != train_sample[i][idx] else 0 for idx in range(len(test_sample[i]))])
+                _distance += comparison_score**2
         distance.append(math.sqrt(_distance))
     return distance
-
