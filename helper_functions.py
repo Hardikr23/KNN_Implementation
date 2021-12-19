@@ -89,11 +89,38 @@ def calc_distance(test_sample, x_train):
     for train_sample in x_train:
         _distance = 0
         for i in range(len(test_sample)):
-            if test_sample[i].is_numeric(): # to calculate distance between numeric columns
+            if isinstance(test_sample[i], int): # to calculate distance between numeric columns
                 _distance += (test_sample[i]-train_sample[i])**2
             else :
+                # replace this with levingston distance
                 # Calculating hamming distance and adding their square to the euclidean distance
                 comparison_score = sum([1 if test_sample[i][idx] != train_sample[i][idx] else 0 for idx in range(len(test_sample[i]))])
                 _distance += comparison_score**2
         distance.append(math.sqrt(_distance))
     return distance
+
+def split_dataset(features, labels, rs):
+    """
+    This function is responsible for splitting the data into training
+    and testing sets. It uses the train_test_split function from sklearn
+    package. It accepts the features and labels and returns training and 
+    testing  sets for samples and labels.
+    
+    Parameters
+    ----------
+    features : numpy.ndarray
+        This a numpy array of all the features made from iris_db['data'].
+    labels : numpy.ndarray
+        This a numpy array of all the features made from iris_db['target'].
+    rs : int
+        This an arbitrary integer value to set the seed at a fixed point to
+        get identical split results every time we run it.
+
+    Returns
+    -------
+    Returns 4 parameters viz. x_train, y_train, x_test, y_test
+    These are splits of the dataset as per industry standards(75% training, 
+    25% testing) for training and testing sets.
+    """
+    from sklearn.model_selection import train_test_split
+    return(train_test_split(features, labels, random_state = rs))
