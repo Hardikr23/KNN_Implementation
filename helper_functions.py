@@ -73,6 +73,7 @@ def find_index_min_distance(distance, n_neighbors):
     return _min_index_list   
 
 def calc_distance(test_sample, x_train):
+
     """
     This function is responsible for calculating the distance of the test
     sample with all the training samples and returns a list of it
@@ -85,6 +86,8 @@ def calc_distance(test_sample, x_train):
     A list of dstances of each training sample from the test sample
     """
     import math
+    from Levenshtein import distance as lev
+
     distance =[]
     for train_sample in x_train:
         _distance = 0
@@ -92,10 +95,10 @@ def calc_distance(test_sample, x_train):
             if isinstance(test_sample[i], int): # to calculate distance between numeric columns
                 _distance += (test_sample[i]-train_sample[i])**2
             else :
-                # replace this with levingston distance
-                # Calculating hamming distance and adding their square to the euclidean distance
-                comparison_score = sum([1 if test_sample[i][idx] != train_sample[i][idx] else 0 for idx in range(len(test_sample[i]))])
-                _distance += comparison_score**2
+                # Levingston distance
+                
+                lev_dist = lev(test_sample[i], train_sample[i])
+                _distance += lev_dist**2
         distance.append(math.sqrt(_distance))
     return distance
 
