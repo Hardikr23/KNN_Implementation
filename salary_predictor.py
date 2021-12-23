@@ -19,7 +19,7 @@ print(x_train.shape)
 print(y_train.shape)
 print(x_test.shape)
 print(y_test.shape)
-n_neighbors, mis_match_count, err_rate =custom_knn(x_train.to_numpy(), x_test.to_numpy(), y_train.to_numpy(), y_test.to_numpy(), n_neighbors = 1)
+n_neighbors, mis_match_count, err_rate = custom_knn(x_train.to_numpy(), x_test.to_numpy(), y_train.to_numpy(), y_test.to_numpy(), n_neighbors = 1)
 
 print("Neighbors : ",n_neighbors)
 print("Mis-match count :", mis_match_count)

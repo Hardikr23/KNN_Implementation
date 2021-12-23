@@ -35,17 +35,13 @@ def custom_knn(x_train, x_test, y_train, y_test, n_neighbors = 1):
     y_pred = []
     print(type(x_test))
     mis_match_count = 0
-    for test_sample in x_test:
+    for test_sample in range(len(x_test)):
         print(test_sample)
-        print("-------")
-        # sys.exit()
 
-        distance = calc_distance(test_sample, x_train)
+        distance = calc_distance(x_test[test_sample], x_train)
         index_min_distance = find_index_min_distance(distance, n_neighbors)
-        predicted_labels.append([test_sample,index_min_distance])
+        predicted_labels.append([x_test[test_sample],index_min_distance])
 
-    # print(predicted_labels)
-    # sys.exit()
     for item in predicted_labels:
         item[1] = [y_train[label] for label in item[1]]
         y_pred.append(max_occured_label(item[1]))
