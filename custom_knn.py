@@ -27,6 +27,8 @@ def custom_knn(x_train, x_test, y_train, y_test, n_neighbors = 1):
     # external imports
     import sys
     import numpy as np
+    from multiprocessing import Pool
+    import logging
 
     # helper function imports
     from helper_functions import calc_distance, find_index_min_distance, max_occured_label
@@ -35,12 +37,20 @@ def custom_knn(x_train, x_test, y_train, y_test, n_neighbors = 1):
     y_pred = []
     print(type(x_test))
     mis_match_count = 0
-    for test_sample in range(len(x_test)):
-        print(test_sample)
+    # for test_sample in range(len(x_test)):
+    logging.info("Created pool")
+    print("Created pool")
+    # Creating pool for multiprocessing
+    p = Pool(50)
+    print("Calculating distances")
+    dist_params = [(test_sample, x_train) for test_sample in x_test]
+    distance = p.map(calc_distance, dist_params)
+    print("Distances Calculated \nFinding index of minimum distances")
 
-        distance = calc_distance(x_test[test_sample], x_train)
-        index_min_distance = find_index_min_distance(distance, n_neighbors)
-        predicted_labels.append([x_test[test_sample],index_min_distance])
+    index_params = [(indv_distance, n_neighbors) for indv_distance in distance]
+    index_min_distance = p.map(find_index_min_distance, index_params)
+    
+    predicted_labels = [[test_sample,indv_index_min_distance] for test_sample,indv_index_min_distance in zip(x_test, index_min_distance)]
 
     for item in predicted_labels:
         item[1] = [y_train[label] for label in item[1]]

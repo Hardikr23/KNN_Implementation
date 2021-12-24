@@ -30,7 +30,7 @@ def max_occured_label(label_list):
             max_key = key
     return max_key
 
-def find_index_min_distance(distance, n_neighbors):
+def find_index_min_distance(index_params):
     """
     This function accepts the list of distances of a single test sample 
     with all other training samples and the number of neighbors that we 
@@ -53,6 +53,8 @@ def find_index_min_distance(distance, n_neighbors):
     import math
     import numpy as np
 
+    distance, n_neighbors = index_params
+
     _min_index_dict = {}
     _min_index_list = []
     for i in range(len(distance)):
@@ -72,7 +74,7 @@ def find_index_min_distance(distance, n_neighbors):
         
     return _min_index_list   
 
-def calc_distance(test_sample, x_train):
+def calc_distance(dist_params):
 
     """
     This function is responsible for calculating the distance of the test
@@ -88,6 +90,7 @@ def calc_distance(test_sample, x_train):
     import math
     from Levenshtein import distance as lev
 
+    test_sample, x_train = dist_params
     distance =[]
     for train_sample in x_train:
         _distance = 0
