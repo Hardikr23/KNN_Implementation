@@ -41,7 +41,7 @@ def custom_knn(x_train, x_test, y_train, y_test, n_neighbors = 1):
     logging.info("Created pool")
     print("Created pool")
     # Creating pool for multiprocessing
-    p = Pool(50)
+    p = Pool(10)
     print("Calculating distances")
     dist_params = [(test_sample, x_train) for test_sample in x_test]
     distance = p.map(calc_distance, dist_params)

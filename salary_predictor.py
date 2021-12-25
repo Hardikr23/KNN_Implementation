@@ -15,11 +15,11 @@ def salary_predictor():
     salary_features = salary_all_cols.iloc[:, :14]
     salary_labels = salary_all_cols["encoded_label"]
     print(len(salary_labels))
-    
+
     # Splitting the dataset with a random seed
     x_train, x_test, y_train, y_test = split_dataset(salary_features, salary_labels, 311)
 
-    n_neighbors, mis_match_count, err_rate = custom_knn(x_train.to_numpy(), x_test.to_numpy(), y_train.to_numpy(), y_test.to_numpy(), n_neighbors = 1)
+    n_neighbors, mis_match_count, err_rate = custom_knn(x_train.to_numpy(), x_test.to_numpy(), y_train.to_numpy(), y_test.to_numpy(), n_neighbors = 5)
 
     print("Neighbors : ",n_neighbors)
     print("Mis-match count :", mis_match_count)
